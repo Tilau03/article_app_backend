@@ -17,10 +17,8 @@ const almacenamiento = multer.diskStorage({
 const subidas = multer({ storage: almacenamiento });
 
 // Rutas de pruebas
-router.get("/ruta-de-prueba", ArticuloControlador.prueba);
-router.get("/curso", ArticuloControlador.curso);
 // Ruta util
-router.post("/crear", ArticuloControlador.crear);
+router.post("/crear", subidas.single('file0'),ArticuloControlador.crear);
 router.get("/articulos/:ultimos?", ArticuloControlador.listar);
 router.get("/articulo/:id", ArticuloControlador.uno);
 router.delete("/articulo/:id", ArticuloControlador.borrar);

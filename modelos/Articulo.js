@@ -13,10 +13,6 @@ const ArticuloSchema = Schema({
         type: Date,
         default: Date.now
     },
-    imagen: {
-        type: String,
-        default: "default.png"
-    }
 });
 
 module.exports = model("Articulo", ArticuloSchema, "articulos");
