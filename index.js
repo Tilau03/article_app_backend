@@ -20,19 +20,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Configurar cors
 app.use(cors());
 
-/* app.use((req, res, next) => {
-  if (req.file) {
-    fileMiddelware(res, req.file, (error, res) => {
-      if (error) {
-        // Manejar cualquier error aquí
-        console.error(error);
-      } else {
-        req.file.filename = res._id;
-      }
-      next();
-    });
-  }
-}); */
+ 
 
 // Convertir body a objeto js
 app.use(express.json()); // recibir datos con content-type app/json
@@ -76,6 +64,23 @@ app.get("/", (req, res) => {
     .status(200)
     .send("<h1>Empezando a crear un api rest con node</h1>");
 });
+
+app.use((req, res, next) => {
+
+  console.log("Middelware",res)
+  next()
+  /* if (req.file) {
+    fileMiddelware(res, req.file, (error, res) => {
+      if (error) {
+        // Manejar cualquier error aquí
+        console.error(error);
+      } else {
+        req.file.filename = res._id;
+      }
+      next();
+    });
+  } */
+}); 
 
 // Crear servidor y escuchar peticiones http
 app.listen(puerto, () => {

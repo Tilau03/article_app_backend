@@ -9,40 +9,34 @@ const crear = async (req, res) => {
   const article = JSON.parse(parametros);
 
   // Validar datos
-  /* try {
-    validarArticulo(article);
-  } catch (error) {
+  let errors = validarArticulo(article);
+  if (Object.keys(errors).length) {
     return res.status(400).json({
       status: "error",
       mensaje: "Faltan datos por enviar",
+      data: errors,
     });
-  } */
+  }
 
   // Crear el objeto a guardar
-
-  // console.log("article:************************", await JSON.stringify(parametros))
-  console.log(article);
   const articulo = new Articulo(article);
 
-  // Asignar valores a objeto basado en el modelo (manual o automatico)
-  //articulo.titulo = parametros.titulo;
-
   // Guardar el articulo en la base de datos
-  articulo.save((error, articuloGuardado) => {
-    if (error || !articuloGuardado) {
+  return await articulo
+    .save()
+    .then((resonse) => {
+      return res.status(200).json({
+        status: "success",
+        articulo: resonse,
+        mensaje: "Articulo creado con exito!!",
+      });
+    })
+    .catch((error) => {
       return res.status(400).json({
         status: "error",
         mensaje: "No se ha guardado el artículo",
       });
-    }
-
-    // Devolver resultado
-    return res.status(200).json({
-      status: "success",
-      articulo: articuloGuardado,
-      mensaje: "Articulo creado con exito!!",
     });
-  });
 };
 
 const listar = (req, res) => {
